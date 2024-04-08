@@ -11,14 +11,72 @@ from static.data_base.model.Mastering import Mastering
 app = Flask(__name__)
 
 
-@app.route('/api/<string:table>', methods=['GET'])
-def get_students(table):
-    if table not in ('students', 'study', 'courses', 'lessons', 'tests', 'mastering',):
-        return jsonify({'errors': f"The table {table} was not found"})
+@app.route('/api/mastering', methods=['GET'])
+def get_mastering():
     session = db_session.create_session()
-    response = session.query(eval(table.capitalize())).all()
+    response = session.query(Mastering).all()
     if response:
-        return jsonify([item.to_dict() for item in response])
+        return jsonify([item.to_dict(
+            only=['mastering_id', 'mastering_rating', 'mastering_lesson_id', 'mastering_study_id']) for item in
+            response])
+    else:
+        return jsonify({'error': 'An empty table'})
+
+
+@app.route('/api/tests', methods=['GET'])
+def get_tests():
+    session = db_session.create_session()
+    response = session.query(Tests).all()
+    if response:
+        return jsonify([item.to_dict(
+            only=['test_id', 'test_title_question', 'test_answer_option_1', 'test_answer_option_2',
+                  'test_answer_option_3', 'test_correct_option', 'test_lesson_id']) for item in response])
+    else:
+        return jsonify({'error': 'An empty table'})
+
+
+@app.route('/api/lessons', methods=['GET'])
+def get_lessons():
+    session = db_session.create_session()
+    response = session.query(Lessons).all()
+    if response:
+        return jsonify([item.to_dict(
+            only=['lessons_id', 'lessons_title', 'lessons_type', 'lessons_url_file', 'lesson_course_id']) for item in
+            response])
+    else:
+        return jsonify({'error': 'An empty table'})
+
+
+@app.route('/api/courses', methods=['GET'])
+def get_courses():
+    session = db_session.create_session()
+    response = session.query(Courses).all()
+    if response:
+        return jsonify([item.to_dict(
+            only=['courses_id', 'courses_title']) for item in response])
+    else:
+        return jsonify({'error': 'An empty table'})
+
+
+@app.route('/api/students', methods=['GET'])
+def get_students():
+    session = db_session.create_session()
+    response = session.query(Students).all()
+    if response:
+        return jsonify([item.to_dict(
+            only=['students_id', 'student_id_telegram', 'student_id_chat', 'student_first_name', 'student_last_name',
+                  'student_login']) for item in response])
+    else:
+        return jsonify({'error': 'An empty table'})
+
+
+@app.route('/api/study', methods=['GET'])
+def get_study():
+    session = db_session.create_session()
+    response = session.query(Study).all()
+    if response:
+        return jsonify([item.to_dict(
+            only=['study_id', 'study_student_id', 'study_course_id']) for item in response])
     else:
         return jsonify({'error': 'An empty table'})
 
