@@ -109,8 +109,8 @@ def delete_student(table, _id):
         return jsonify({'error': 'Not found'})
 
 
-@app.route('/api/students', methods=['POST'])
-def create_student():
+@app.route('/api/update_student', methods=['PUT'])
+def update_student():
     if not request.json:
         return jsonify({'error': 'Empty request'})
     elif not all(key in request.json for key in
@@ -145,6 +145,32 @@ def create_student():
     session.commit()
 
     return jsonify({'success': 'OK'})
+
+
+@app.route('/api/students', methods=['POST'])
+def create_student():
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+    elif not all(key in request.json for key in
+                 ['student_first_name', 'student_last_name',
+                  'student_login', 'student_password']):
+        return jsonify({'error': 'Bad request'})
+    no_value = {key: 'No value' for key, value in request.json.items() if not value}
+    if no_value:
+        return jsonify(no_value)
+    res = request.json
+    session = db_session.create_session()
+    new_student = Students(
+        student_id_telegram='',
+        student_id_chat='',
+        student_first_name=res['student_first_name'],
+        student_last_name=res['student_last_name'],
+        student_login=res['student_login'],
+    )
+    new_student.set_password(res['student_password'])
+    session.add(new_student)
+    session.commit()
+    return jsonify([new_student.to_dict()])
 
 
 @app.route('/api/courses', methods=['POST'])
@@ -209,4 +235,4 @@ def create_lesson():
 
 if __name__ == '__main__':
     db_session.global_init("static/data_base/data_base.db")
-    app.run()
+    app.run(port=8080)
