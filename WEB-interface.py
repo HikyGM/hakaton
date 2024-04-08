@@ -10,6 +10,24 @@ def index():
     return render_template('index.html', title='Домашняя страница', content='content/home.html')
 
 
+@app.route('/courses', methods=['GET'])
+def get_courses():
+    res = requests.get('http://127.0.0.1:8080/api/courses')
+    if res.status_code == 200:
+        # return res.json()
+        courses = []
+        for item in res.json():
+            new_courses = {
+                'courses_id': item['courses_id'],
+                'courses_title': item['courses_title']
+            }
+            courses.append(new_courses)
+        return render_template('index.html', title='Домашняя страница', content='content/courses.html',
+                               courses=courses)
+    else:
+        return {'error': 'An empty table'}
+
+
 @app.route('/students', methods=['GET'])
 def get_students():
     res = requests.get('http://127.0.0.1:8080/api/students')
@@ -24,7 +42,8 @@ def get_students():
                            'student_login': item['student_login'],
                            'students_id': item['students_id']}
             students.append(new_student)
-        return render_template('index.html', title='Домашняя страница', content='content/students.html', students=students)
+        return render_template('index.html', title='Домашняя страница', content='content/students.html',
+                               students=students)
     else:
         return {'error': 'An empty table'}
 
