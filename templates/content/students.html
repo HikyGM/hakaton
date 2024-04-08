@@ -1,0 +1,166 @@
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="div">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop">
+                Добавить студента
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Добавление</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <form method="post" action="#">
+                                        <div class="mb-3">
+                                            <label class="form-label">Имя</label>
+                                            <input type="text" class="form-control" name="first_name"
+                                                   placeholder="Имя">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Фамилия</label>
+                                            <input type="text" class="form-control" name="last_name"
+                                                   placeholder="Фамилия">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Логин</label>
+                                            <input type="text" class="form-control" name="login"
+                                                   placeholder="Логин">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Пароль</label>
+                                            <input type="text" name="password" class="form-control"
+                                                   aria-describedby="passwordHelpBlock">
+                                            <div id="passwordHelpBlock" class="form-text">
+                                                Пароль должен содержать от 8 до 20 символов.
+                                            </div>
+                                        </div>
+                                        <p style="color: #ff0000">{{ answer }}</p>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary mb-3">Добавить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <a class="btn btn-secondary" href="/add-student" role="button">Добавить студента</a>
+<!--            <a class="btn btn-secondary" href="/add-student" role="button">Изменить студента</a>-->
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">ID телеграмм</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Логин</th>
+                <th scope="col">Изменение</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in students %}
+            <tr>
+                <th scope="row">{{item["students_id"]}}</th>
+                <td>{{item["student_id_telegram"]}}</td>
+                <td>{{item["student_first_name"]}}</td>
+                <td>{{item["student_last_name"]}}</td>
+                <td>{{item["student_login"]}}</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                        Изменить
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Изменение</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <form method="post" action="#">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Имя</label>
+                                                    <input type="text" class="form-control" name="first_name"
+                                                           placeholder="Имя">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Фамилия</label>
+                                                    <input type="text" class="form-control" name="last_name"
+                                                           placeholder="Фамилия">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Логин</label>
+                                                    <input type="text" class="form-control" name="login"
+                                                           placeholder="Логин">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Пароль</label>
+                                                    <input type="text" name="password" class="form-control"
+                                                           aria-describedby="passwordHelpBlock">
+                                                    <div id="passwordHelpBlock" class="form-text">
+                                                        Пароль должен содержать от 8 до 20 символов.
+                                                    </div>
+                                                </div>
+                                                <p style="color: #ff0000">{{ answer }}</p>
+                                                <div class="mb-3">
+                                                    <button type="submit" class="btn btn-primary mb-3">Добавить</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена
+                                    </button>
+                                    <button type="button" class="btn btn-primary">Изменить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <a class="btn btn-secondary" href='/edit-student/{{item["students_id"]}}' role="button">Изменить</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+

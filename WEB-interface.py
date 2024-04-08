@@ -14,7 +14,17 @@ def index():
 def get_students():
     res = requests.get('http://127.0.0.1:8080/api/students')
     if res.status_code == 200:
-        return res.json()
+        # return res.json()
+        students = []
+        for item in res.json():
+            new_student = {'student_id_telegram': item['student_id_telegram'],
+                           'student_id_chat': item['student_id_chat'],
+                           'student_first_name': item['student_first_name'],
+                           'student_last_name': item['student_last_name'],
+                           'student_login': item['student_login'],
+                           'students_id': item['students_id']}
+            students.append(new_student)
+        return render_template('index.html', title='Домашняя страница', content='content/students.html', students=students)
     else:
         return {'error': 'An empty table'}
 
